@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <functional>
+#include <cstring>
 
-template <class T>
+template <typename T>
 class UniqueVector {
 
 private:
@@ -35,7 +36,6 @@ public:
 	T& operator[](int i);
 	const T& operator[](int i) const;
 	friend std::ostream& operator<<(std::ostream& os, const UniqueVector<T>& element);
-
 
 	void addElement(const T& element);
 	void addElementAt(int position, const T& element);

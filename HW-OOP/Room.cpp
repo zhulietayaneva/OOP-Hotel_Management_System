@@ -2,78 +2,69 @@
 #include <stdexcept>
 #include <cstring>
 #include "RoomType.h"
+#include "Room.h"
 
 
-class Room {
-
-private:
-	unsigned int _number = 0;
-	RoomType _type = RoomType::Invalid;
-	char* _description;
-
-	void setNumber(unsigned int val) {  
+	void Room::setNumber(unsigned int val) {  
 		if (val > 0)
 		{
-			_number = val;
+			this->_number = val;
 		}
 		else
 		{
 			throw new std::runtime_error("Invalid room number!");
 		}
 	}
-	void setDescription(char* val) {
-		delete[] _description;
-		_description = new char[strlen(val) + 1];
-		strcpy(_description, val);
+	void Room::setDescription(char* val) {
+		delete[] this->_description;
+		this->_description = new char[strlen(val) + 1];
+		strcpy(this->_description, val);
 	}
 
-	void destroy() {
-		delete[]_description;
-		_description = nullptr;
+	void Room::destroy() {
+		delete[]this->_description;
+		this->_description = nullptr;
 
 	}
-	void copy(const Room& other) {
+	void Room::copy(const Room& other) {
 		this->_number = other.getRoomNumber();
 		this->_type = other.getRoomType();
 
-		delete[]_description;
-		_description = new char[strlen(other.getRoomDescription())];
+		delete[]this->_description;
+		this->_description = new char[strlen(other.getRoomDescription())];
 		strcpy(this->_description, other.getRoomDescription());
 	}
 
 
-public:
-
-	Room()
+	Room::Room()
 	{
-		_description = new char[1] {'\0'};
+		this->_description = new char[1] {'\0'};
 	}
-	Room(unsigned int num, RoomType type, char* description)
+	Room::Room(unsigned int num, RoomType type, char* description)
 	{
 		setNumber(num);
-		_type = type;
+		this->_type = type;
 		setDescription(description);
 	}
-	Room(const Room& other) {
+	Room::Room(const Room& other) {
 		copy(other);
-
 	}
-	~Room() {
+	Room::~Room() {
 		destroy();
 	}
 
 
-	const unsigned int getRoomNumber() const {
-		return _number;
+	const unsigned int Room::getRoomNumber() const {
+		return this->_number;
 	}
-	const RoomType getRoomType() const {
-		return _type;
+	const RoomType Room::getRoomType() const {
+		return this->_type;
 	}
-	const char* getRoomDescription() const {
-		return _description;
+	const char* Room::getRoomDescription() const {
+		return this->_description;
 	}
-	const unsigned int getPriceForANight()const {
-		switch (_type)
+	const unsigned int Room::getPriceForANight()const {
+		switch (this->_type)
 		{
 		case RoomType::Invalid: return 0;
 
@@ -86,11 +77,15 @@ public:
 		}
 	}
 
-	Room& operator=(const Room& other) {
-		copy(other);
+	Room& Room::operator=(const Room& other) {
+		if (this != &other) {
+
+			copy(other);
+		}
+
 		return *this;
 	}
-	bool operator==(const Room& other) {
+	bool Room::operator==(const Room& other) {
 
 		if (other.getRoomNumber() == this->_number || &other == this)
 		{
@@ -99,7 +94,7 @@ public:
 		return true;
 
 	}
-	friend std::ostream& operator<<(std::ostream& os, const Room& obj) {
+	std::ostream& operator<<(std::ostream& os, const Room& obj) {
 
 		os << "Room number: " << obj.getRoomNumber() << std::endl;
 		os << "Room Type: " << obj.getRoomType() << std::endl;
@@ -108,5 +103,3 @@ public:
 		return os;
 	}
 
-
-};

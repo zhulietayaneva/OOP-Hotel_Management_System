@@ -14,10 +14,12 @@ private:
 	Time _startDate;
 	Time _endDate;
 
+	void setId(unsigned int val);
 	void copy(const Reservation& other);
 
 public:
 	Reservation();
+	Reservation(unsigned int id, Customer customer, Room room, Time start, Time end);
 	Reservation(const Reservation& other);
 
 	const unsigned int getRoomNumber() const;

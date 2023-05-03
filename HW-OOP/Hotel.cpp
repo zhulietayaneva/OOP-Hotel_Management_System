@@ -1,112 +1,109 @@
 #include <iostream>
-#include "UniqueVector.h"
-#include "Room.h"
-#include "Reservation.h"
+#include "Hotel.h"
 
+	
+	void Hotel::copy(const Hotel& other) {
 
-
-class Hotel {
-private:
-	UniqueVector<Room> _rooms;
-	UniqueVector<Reservation> _reservations;
-
-	void copy(const Hotel& other) {
-
-		_rooms = *(new UniqueVector<Room>[other._rooms.getLength()]);
-		_reservations = *(new UniqueVector<Reservation>[other._reservations.getLength()]);
+		this->_rooms = *(new UniqueVector<Room>[other._rooms.getLength()]);
+		this->_reservations = *(new UniqueVector<Reservation>[other._reservations.getLength()]);
 
 	}
-
-public:
-
-	Hotel()
+	void Hotel::destroy() {
+		delete[]&_rooms;
+		delete[] & _reservations;
+	}
+	
+	Hotel::Hotel()
 	{
-		_rooms = *(new UniqueVector<Room>());
-		_reservations = *(new UniqueVector<Reservation>());
+		this->_rooms = *(new UniqueVector<Room>());
+		this->_reservations = *(new UniqueVector<Reservation>());
 
 	}
-	Hotel(int roomCapacity, int reservationCapacity)
+	Hotel::Hotel(int roomCapacity, int reservationCapacity)
 	{
-		_rooms = *(new UniqueVector<Room>[roomCapacity]);
-		_reservations = *(new UniqueVector<Reservation>[reservationCapacity]);
+		this->_rooms = *(new UniqueVector<Room>[roomCapacity]);
+		this->_reservations = *(new UniqueVector<Reservation>[reservationCapacity]);
 	}
-	Hotel(const Hotel& other) {
+	Hotel::Hotel(const Hotel& other) {
 		copy(other);
 	}
-		
-	void addReservation(const Reservation& reservation) {
-		_reservations.addElement(reservation);
+	Hotel::~Hotel() {
+		destroy();
 	}
-	void removeReservationWithNumber(unsigned int id) {
+	
+	void Hotel::addReservation(const Reservation& reservation) {
+		this->_reservations.addElement(reservation);
+	}
+	void Hotel::removeReservationWithNumber(unsigned int id) {
 
 
-		for (size_t i = 0; i < _reservations.getLength(); i++)
+		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
-			if (_reservations[i].getID() == id)
+			if (this->_reservations[i].getID() == id)
 			{
 
-				_reservations.removeElementAt(i);
+				this->_reservations.removeElementAt(i);
 
 			}
 		}
 
 
 	}
-	const unsigned int profitFromReservationsEndingOn(const Time& end) const {
+	const unsigned int Hotel::profitFromReservationsEndingOn(const Time& end) const {
 		unsigned int sum = 0;
 
-		for (size_t i = 0; i < _reservations.getLength(); i++)
+		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
-			if (_reservations[i].getEndDate() == end)
+			if (this->_reservations[i].getEndDate() == end)
 			{
-				sum += _reservations[i].getRoomPrice();
+				sum += this->_reservations[i].getRoomPrice();
+			}
+		}
+
+		return sum;
+
+	}
+	void Hotel::ReservatinsMadeByClient(const char* clientName) {
+
+		for (size_t i = 0; i < this->_reservations.getLength(); i++)
+		{
+			if (this->_reservations[i].getCustomerName() == clientName)
+			{
+				std::cout << this->_reservations[i] << std::endl;;
 			}
 		}
 
 
 	}
-	void ReservatinsMadeByClient(const char* clientName) {
-
-		for (size_t i = 0; i < _reservations.getLength(); i++)
-		{
-			if (_reservations[i].getCustomerName() == clientName)
-			{
-				std::cout << _reservations[i] << std::endl;;
-			}
-		}
-
-
-	}
-
-	void addRoom(const Room& room) {
+	
+	void Hotel::addRoom(const Room& room) {
 		_rooms.addElement(room);
 	}
-	const bool isRoomFreeBetween(const Time start, const Time end, unsigned int roomNum) {
+	const bool Hotel::isRoomFreeBetween(const Time start, const Time end, unsigned int roomNum) {
 
-		for (size_t i = 0; i < _reservations.getLength(); i++)
+		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
 
-			if (_reservations[i].getRoomNumber() == roomNum)
+			if (this->_reservations[i].getRoomNumber() == roomNum)
 			{
-				return _reservations[i].isTheRoomFreeForThePeriod(start, end);
+				return this->_reservations[i].isTheRoomFreeForThePeriod(start, end);
 			}
 		}
 		return false;
 	}
-	void freeRoomsBetween(const Time& start, const Time& end) {
+	void Hotel::freeRoomsBetween(const Time& start, const Time& end) {
 
 
-		for (size_t i = 0; i < _reservations.getLength(); i++)
+		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
 
-			if (_reservations[i].isTheRoomFreeForThePeriod(start, end))
+			if (this->_reservations[i].isTheRoomFreeForThePeriod(start, end))
 			{
-				std::cout << "Room: " << _reservations[i].getRoomNumber() << std::endl;
+				std::cout << "Room: " << this->_reservations[i].getRoomNumber() << std::endl;
 			}
 		}
 	}
-
-	friend std::ostream& operator<< (std::ostream& os, const Hotel& obj) {
+	std::ostream& operator<< (std::ostream& os, const Hotel& obj) {
 
 		for (size_t i = 0; i < obj._reservations.getLength(); i++)
 		{
@@ -116,4 +113,3 @@ public:
 
 	}
 
-};

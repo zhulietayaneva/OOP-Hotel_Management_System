@@ -1,18 +1,9 @@
 #include <iostream>
 #include <ctime>
+#include "Time.h"
 
 
-class Time {
-private:
-	unsigned int _year;
-	unsigned int _month;
-	unsigned int _day;
-	unsigned int _hour;
-	unsigned int _minute;
-	unsigned int _second;
-
-
-	int daysInMonth(int m, int y)
+	int Time::daysInMonth(int m, int y)
 	{
 		if (m == 2) {
 			if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) { return 29; }
@@ -24,7 +15,7 @@ private:
 		}
 		return 31;
 	}
-	bool isLeapYear(const int year) {
+	bool Time::isLeapYear(const int year) {
 		if (year % 400 == 0) {
 			return true;
 		}
@@ -36,20 +27,43 @@ private:
 		}
 		return false;
 	}
-	static tm to_tm(const Time& obj) {
+	tm Time::to_tm(const Time& obj) {
 		tm timeinfo = {};
-		timeinfo.tm_year = obj._year - 1900;
-		timeinfo.tm_mon = obj._month - 1;
-		timeinfo.tm_mday = obj._day;
-		timeinfo.tm_hour = obj._hour;
-		timeinfo.tm_min = obj._minute;
-		timeinfo.tm_sec = obj._second;
+		timeinfo.tm_year = obj.getYear() - 1900;
+		timeinfo.tm_mon = obj.getMonth() - 1;
+		timeinfo.tm_mday = obj.getDay();
+		timeinfo.tm_hour = obj.getHour();
+		timeinfo.tm_min = obj.getMinute();
+		timeinfo.tm_sec = obj.getSecond();
 		timeinfo.tm_isdst = -1;
 		return timeinfo;
 	}
 
-public:
-	Time() {
+	const unsigned int Time::getYear() const {
+		return this->_year;
+	}
+
+	const unsigned int Time::getMonth() const {
+		return _month;
+	}
+
+	const unsigned int Time::getDay() const {
+		return _day;
+	}
+
+	const unsigned int Time::getHour() const {
+		return _hour;
+	}
+
+	const unsigned int Time::getMinute() const {
+		return _minute;
+	}
+
+	const unsigned int Time::getSecond() const {
+		return _second;
+	}
+
+	Time::Time() {
 		_year = 0;
 		_month = 0;
 		_day = 0;
@@ -57,8 +71,7 @@ public:
 		_minute = 0;
 		_second = 0;
 	}
-
-	Time(unsigned int year, unsigned int month, unsigned int day, unsigned int hour, unsigned int minute, unsigned int second)
+	Time::Time(unsigned int year, unsigned int month, unsigned int day, unsigned int hour, unsigned int minute, unsigned int second)
 	{
 		_year = year;
 		_month = month;
@@ -68,10 +81,10 @@ public:
 		_second = second;
 	}
 
-	static int daysBetweenDates(const Time& date1, const Time& date2) {
+	int Time::daysBetweenDates(const Time& date1, const Time& date2) {
 
-		tm d1 = to_tm(date1);
-		tm d2 = to_tm(date2);
+		tm d1 = Time::to_tm(date1);
+		tm d2 = Time::to_tm(date2);
 
 
 		time_t time1 = mktime(&d1);
@@ -83,14 +96,14 @@ public:
 		return diffDays;
 	}
 
-	Time operator-(const Time& other)
+	Time Time::operator-(const Time& other)
 	{
-		int year = this->_year - other._year;
-		int month = this->_month - other._month;
-		int day = this->_day - other._day;
-		int hour = this->_hour - other._hour;
-		int min = _minute - other._minute;
-		int sec = _second - other._second;
+		int year = this->_year - other.getYear();
+		int month = this->_month - other.getMonth();
+		int day = this->_day - other.getDay();
+		int hour = this->_hour - other.getHour();
+		int min = this->_minute - other.getMinute();
+		int sec = this->_second - other.getSecond();
 
 		if (sec < 0) {
 			sec += 60;
@@ -105,17 +118,22 @@ public:
 			day--;
 		}
 		if (day < 0) {
-			day += daysInMonth(month, year);
 			month--;
+			if (month < 0) {
+				month += 12;
+				year--;
+			}
+			day += daysInMonth(month, year);
 		}
 		if (month < 0) {
 			month += 12;
 			year--;
 		}
 
+		return Time(year, month, day, hour, min, sec);
 
 	}
-	const bool operator<(const Time& t2) const {
+	const bool Time::operator<(const Time& t2) const {
 		if (this->_year < t2._year) {
 			return true;
 		}
@@ -163,7 +181,7 @@ public:
 			}
 		}
 	}
-	bool operator==(const Time& other) const {
+	bool Time::operator==(const Time& other) const {
 		return _year == other._year &&
 			_month == other._month &&
 			_day == other._day &&
@@ -171,9 +189,7 @@ public:
 			_minute == other._minute &&
 			_second == other._second;
 	}
-	friend std::ostream& operator<<(std::ostream& os, const Time& obj) {
+	std::ostream& operator<<(std::ostream& os, const Time& obj) {
 		os << obj._year << '-' << obj._month << '-' << obj._day << ' ' << obj._hour << ':' << obj._minute << ':' << obj._second;
 		return os;
 	}
-
-};

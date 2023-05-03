@@ -1,4 +1,4 @@
-#include "roomtype.h"
+#include "Roomtype.h"
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& os, const RoomType& rt) {

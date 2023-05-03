@@ -1,5 +1,5 @@
 #pragma once
-#include "roomtype.h"
+#include "RoomType.h"
 
 class Room {
 private:

@@ -2,7 +2,9 @@
 #include <iostream>
 #include "UniqueVector.h"
 #include "Room.h"
+#include "RoomType.h"
 #include "Reservation.h"
+#include "Time.h"
 
 
 class Hotel {
@@ -13,12 +15,14 @@ private:
 	UniqueVector<Reservation> _reservations;
 
 	void copy(const Hotel& other);
+	void destroy();
 
 public:
 
 	Hotel();
 	Hotel(int roomCapacity, int reservationCapacity);
 	Hotel(const Hotel& other);
+	~Hotel();
 
 	void addReservation(const Reservation& reservation);
 	void removeReservationWithNumber(unsigned int id);

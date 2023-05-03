@@ -1,104 +1,102 @@
 #include <iostream>
 #include <cstring>
-#include <exception>
+#include <stdexcept>
+#include "Customer.h"
 
-class Customer {
-private:
 
-	char* _name;
-	char* _telNumber;
-	char* _address;
 
-	void setName(const char* val) {
+	void Customer::setName(const char* val) {
 		if (strlen(val) > 0)
 		{
-			_name = new char[strlen(val) + 1];
-			strcpy(_name, val);
+			this->_name = new char[strlen(val) + 1];
+			strcpy(this->_name, val);
 		}
 		else
 		{
-			throw new std::logic_error("Invalid name!");
+			throw new std::runtime_error("Invalid name!");
 		}
 
 
 	}
-	void setTelephoneNumber(const char* val) {
+	void Customer::setTelephoneNumber(const char* val) {
 		if (val[0] == '0' && val[1] == '8' && strlen(val) == 10)
 		{
-			_telNumber = new char[strlen(val) + 1];
-			strcpy(_telNumber, val);
+			this->_telNumber = new char[strlen(val) + 1];
+			strcpy(this->_telNumber, val);
 		}
 		else
 		{
-			throw new std::logic_error("Invalid phone number");
+			throw new std::runtime_error("Invalid phone number");
 		}
 
 
 	}
-	void setAddress(const char* val) {
+	void Customer::setAddress(const char* val) {
 		if (strlen(val) > 0)
 		{
-			_address = new char[strlen(val) + 1];
-			strcpy(_address, val);
+			this->_address = new char[strlen(val) + 1];
+			strcpy(this->_address, val);
 		}
 		else
 		{
-			throw new std::logic_error("Invalid address");
+			throw new std::runtime_error("Invalid address");
 		}
 
 
 	}
 
-	void copy(const Customer& other) {
+	void Customer::copy(const Customer& other) {
 		destroy();
 
 		setName(other.getName());
 		setTelephoneNumber(other.getTelephoneNumber());
 		setAddress(other.getAddress());
 	}
-	void destroy() {
-		delete[] _name;
-		_name = nullptr;
-		delete[] _telNumber;
-		_telNumber = nullptr;
-		delete[] _address;
-		_address = nullptr;
+	void Customer::destroy() {
+		delete[]this->_name;
+		this->_name = nullptr;
+		delete[]this->_telNumber;
+		this->_telNumber = nullptr;
+		delete[] this->_address;
+		this->_address = nullptr;
 	}
 
-public:
 
 
-	Customer()
+
+	Customer::Customer()
 	{
-		_name = new char[1] {'\0'};
-		_telNumber = new char[1] {'\0'};
-		_address = new char[1] {'\0'};
+		this->_name = new char[1] {'\0'};
+		this->_telNumber = new char[1] {'\0'};
+		this->_address = new char[1] {'\0'};
 	}
-	Customer(char* name, char* telNumber, char* address) {
-
-		destroy();
-
+	Customer::Customer(char* name, char* telNumber, char* address) {
+		
 		setName(name);
 		setTelephoneNumber(telNumber);
 		setAddress(address);
 
 	}
-	Customer(const Customer& other) {
+	Customer::Customer(const Customer& other) {
 		copy(other);
 	}
-	~Customer() {
+	Customer::~Customer() {
 		destroy();
 	}
 
-	const char* getName() const { return _name; }
-	const char* getTelephoneNumber() const { return _telNumber; }
-	const char* getAddress() const { return _address; }
+	const char* Customer::getName() const { return this->_name; }
+	const char* Customer::getTelephoneNumber() const { return this->_telNumber; }
+	const char* Customer::getAddress() const { return this->_address; }
 
-	Customer& operator=(const Customer& other) {
-		copy(other);
+	Customer& Customer::operator=(const Customer& other) {
+		if (this != &other) {
+
+			copy(other);
+		}
+
 		return *this;
 	}
-	bool operator==(const Customer& other) {
+	bool Customer::operator==(const Customer& other) {
 
 		if (this == &other)
 		{
@@ -112,7 +110,7 @@ public:
 		}
 		return false;
 	}
-	friend std::ostream& operator<<(std::ostream& os, const Customer& obj) {
+	std::ostream& operator<<(std::ostream& os, const Customer& obj) {
 		os << "Name: " << obj.getName() << std::endl;
 		os << "Phone number: " << obj.getTelephoneNumber() << std::endl;
 		os << "Address: " << obj.getAddress() << std::endl;
@@ -120,4 +118,3 @@ public:
 		return os;
 	}
 
-};
