@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <functional>
-#include "UniqueVector.h"
+
 
 template<class T>
 class UniqueVector {
@@ -19,7 +19,7 @@ private:
 		}
 		else
 		{
-			throw new exception("Invalid value!");
+			throw new std::logic_error("Invalid value!");
 		}
 	}
 
@@ -109,7 +109,7 @@ public:
 		{
 			os << _arr[i] << " ";
 		}
-		os << endl;
+		os << std::endl;
 		return os;
 	}
 
@@ -175,7 +175,7 @@ public:
 		}
 		else
 		{
-			cout << "Element " << _arr[postition] << " already exists!\n";
+			std::cout << "Element " << _arr[postition] << " already exists!\n";
 		}
 	}
 
@@ -193,7 +193,7 @@ public:
 	}
 
 	template<typename U>
-	UniqueVector<U> map(function<U(const T&)>) const
+	UniqueVector<U> map(std::function<U(const T&)>) const
 	{
 		UniqueVector<U> result;
 		for (int i = 0; i < _length; i++)
@@ -202,7 +202,7 @@ public:
 		}
 		return result;
 	}
-	UniqueVector<T> filter(function<bool(const T&)> predicate)
+	UniqueVector<T> filter(std::function<bool(const T&)> predicate)
 	{
 		UniqueVector<T> result;
 
@@ -216,7 +216,7 @@ public:
 		return result;
 	}
 	template<typename U>
-	U reduce(U null_val, function<U(U, T)> op) const
+	U reduce(U null_val, std::function<U(U, T)> op) const
 	{
 		U result = null_val;
 		for (int i = 0; i < _length; i++)
@@ -225,7 +225,7 @@ public:
 		}
 		return result;
 	}
-	UniqueVector<T> partition(function<bool(const T&)> predicate)
+	UniqueVector<T> partition(std::function<bool(const T&)> predicate)
 	{
 		UniqueVector<T> first;
 		UniqueVector<T> _second;

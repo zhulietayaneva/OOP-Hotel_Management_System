@@ -1,8 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "Customer.h"
-
-
+#include <exception>
 
 class Customer {
 private:
@@ -19,7 +17,7 @@ private:
 		}
 		else
 		{
-			throw new exception("Invalid name!");
+			throw new std::logic_error("Invalid name!");
 		}
 
 
@@ -32,7 +30,7 @@ private:
 		}
 		else
 		{
-			throw new exception("Invalid phone number");
+			throw new std::logic_error("Invalid phone number");
 		}
 
 
@@ -45,7 +43,7 @@ private:
 		}
 		else
 		{
-			throw new exception("Invalid address");
+			throw new std::logic_error("Invalid address");
 		}
 
 
@@ -115,9 +113,9 @@ public:
 		return false;
 	}
 	friend std::ostream& operator<<(std::ostream& os, const Customer& obj) {
-		os << "Name: " << obj.getName() << endl;
-		os << "Phone number: " << obj.getTelephoneNumber() << endl;
-		os << "Address: " << obj.getAddress() << endl;
+		os << "Name: " << obj.getName() << std::endl;
+		os << "Phone number: " << obj.getTelephoneNumber() << std::endl;
+		os << "Address: " << obj.getAddress() << std::endl;
 
 		return os;
 	}

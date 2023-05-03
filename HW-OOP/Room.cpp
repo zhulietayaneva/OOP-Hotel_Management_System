@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstring>
-#include "room.h"
+#include "RoomType.h"
 
 
 class Room {

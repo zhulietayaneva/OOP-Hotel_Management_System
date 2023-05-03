@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Hotel.h"
 #include "UniqueVector.h"
 #include "Room.h"
 #include "Reservation.h"
