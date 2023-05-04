@@ -184,9 +184,9 @@ void UniqueVector<T>::removeElementAt(int postition) {
 		{
 			this->_arr[i] = this->_arr[i + 1];
 		}
+		//delete this->_arr[_length];
 		this->_length--;
-		delete _arr[_length];
-		_arr[_length] = nullptr;
+		//this->_arr[_length] = nullptr;
 	}
 	else
 	{

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Hotel.h"
+#include "UniqueVector.cpp"
 
 	
 	void Hotel::copy(const Hotel& other) {
