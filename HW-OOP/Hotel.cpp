@@ -21,10 +21,10 @@
 
 	}
 	Hotel::Hotel(int roomCapacity, int reservationCapacity)
+		: _rooms(roomCapacity), _reservations(reservationCapacity)
 	{
-		this->_rooms = *(new UniqueVector<Room>[roomCapacity]);
-		this->_reservations = *(new UniqueVector<Reservation>[reservationCapacity]);
 	}
+
 	Hotel::Hotel(const Hotel& other) {
 		copy(other);
 	}
@@ -33,6 +33,7 @@
 	}
 	
 	void Hotel::addReservation(const Reservation& reservation) {
+		this->_rooms.addElement(reservation.getRoom());
 		this->_reservations.addElement(reservation);
 	}
 	void Hotel::removeReservationWithNumber(unsigned int id) {
@@ -44,6 +45,7 @@
 			{
 
 				this->_reservations.removeElementAt(i);
+				std::cout << "Removed reservation with ID " << id << "!" << std::endl;
 
 			}
 		}
@@ -65,11 +67,11 @@
 
 	}
 	void Hotel::ReservatinsMadeByClient(const char* clientName) {
-
+		
 		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
-			if (this->_reservations[i].getCustomerName() == clientName)
-			{
+			if (strcmp(this->_reservations[i].getCustomerName(),clientName)==0)
+			{				
 				std::cout << this->_reservations[i] << std::endl;;
 			}
 		}
@@ -104,11 +106,13 @@
 			}
 		}
 	}
-	std::ostream& operator<< (std::ostream& os, const Hotel& obj) {
+	std::ostream& operator<<(std::ostream& os, const Hotel& obj) {
 
 		for (size_t i = 0; i < obj._reservations.getLength(); i++)
 		{
+			os << "Reservation " << i+1 << ":" << std::endl;
 			os << obj._reservations[i] << std::endl;
+			os << std::endl;
 		}
 		return os;
 

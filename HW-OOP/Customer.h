@@ -5,9 +5,9 @@
 class Customer {
 private:
 
-	char* _name;
-	char* _telNumber;
-	char* _address;
+	char* _name = nullptr;
+	char* _telNumber = nullptr;
+	char* _address = nullptr;
 
 	void setName(const char* val);
 	void setTelephoneNumber(const char* val);

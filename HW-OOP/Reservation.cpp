@@ -40,6 +40,8 @@
 		copy(other);
 	}
 	//TODO
+
+	const Room Reservation::getRoom() const { return this->_room; }
 	const unsigned int Reservation::getRoomNumber() const {
 		return this->_room.getRoomNumber();
 	}
@@ -62,7 +64,7 @@
 	std::ostream& operator<<(std::ostream& os, const Reservation& obj) {
 		os << "ID: " << obj._id << std::endl;
 		os << "Room: " << obj._room.getRoomNumber() << ", " << obj._room.getRoomType() << std::endl;
-		os << "Customer: " << obj._customer.getName() << ", " << obj._customer.getTelephoneNumber() << obj._customer.getAddress() << std::endl;
+		os << "Customer: " << obj._customer.getName() << ", " << obj._customer.getTelephoneNumber() <<", " << obj._customer.getAddress() << std::endl;
 		os << "Start: " << obj._startDate << std::endl;
 		os << "End: " << obj._endDate << std::endl;
 

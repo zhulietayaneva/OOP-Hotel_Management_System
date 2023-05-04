@@ -14,6 +14,7 @@ private:
 
 	void setCapacity(int val);
 
+	void destroyObj(int i);
 	void deleteArr();
 	void copy(const UniqueVector<T>& other);
 

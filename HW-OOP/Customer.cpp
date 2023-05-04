@@ -19,7 +19,7 @@
 
 	}
 	void Customer::setTelephoneNumber(const char* val) {
-		if (val[0] == '0' && val[1] == '8' && strlen(val) == 10)
+		if (strlen(val) == 10 && strncmp(val, "08", 2) == 0)
 		{
 			this->_telNumber = new char[strlen(val) + 1];
 			strcpy(this->_telNumber, val);
@@ -53,22 +53,29 @@
 		setAddress(other.getAddress());
 	}
 	void Customer::destroy() {
-		delete[]this->_name;
-		this->_name = nullptr;
-		delete[]this->_telNumber;
-		this->_telNumber = nullptr;
-		delete[] this->_address;
-		this->_address = nullptr;
+		if (this->_name != nullptr) {
+			delete[] this->_name;
+			this->_name = nullptr;
+		}
+		if (this->_telNumber != nullptr) {
+			delete[] this->_telNumber;
+			this->_telNumber = nullptr;
+		}
+		if (this->_address != nullptr) {
+			delete[] this->_address;
+			this->_address = nullptr;
+		}
 	}
+
 
 
 
 
 	Customer::Customer()
 	{
-		this->_name = new char[1] {'\0'};
-		this->_telNumber = new char[1] {'\0'};
-		this->_address = new char[1] {'\0'};
+		this->_name = nullptr;
+		this->_telNumber = nullptr;
+		this->_address = nullptr;
 	}
 	Customer::Customer(char* name, char* telNumber, char* address) {
 		

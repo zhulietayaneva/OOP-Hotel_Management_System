@@ -5,7 +5,7 @@ class Room {
 private:
 	unsigned int _number = 0;
 	RoomType _type = RoomType::Invalid;
-	char* _description;
+	char* _description=nullptr;
 
 	void setNumber(unsigned int val);
 	void setDescription(char* val);

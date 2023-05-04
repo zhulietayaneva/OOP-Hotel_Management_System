@@ -16,7 +16,10 @@
 		}
 	}
 	void Room::setDescription(char* val) {
-		delete[] this->_description;
+		if (this->_description!=nullptr)
+		{
+			delete[]this->_description;
+		}
 		this->_description = new char[strlen(val) + 1];
 		strcpy(this->_description, val);
 	}
@@ -30,16 +33,26 @@
 		this->_number = other.getRoomNumber();
 		this->_type = other.getRoomType();
 
-		delete[]this->_description;
-		this->_description = new char[strlen(other.getRoomDescription())];
-		strcpy(this->_description, other.getRoomDescription());
+		if (this->_description != nullptr)
+		{
+			delete[]this->_description;
+		}
+		if (other._description != nullptr)
+		{
+			this->_description = new char[strlen(other.getRoomDescription()) + 1];
+			strcpy(this->_description, other.getRoomDescription());
+		}
+		else
+		{
+			this->_description = nullptr;
+		}
 	}
 
 
-	Room::Room()
+	Room::Room() : _description(nullptr)
 	{
-		this->_description = new char[1] {'\0'};
 	}
+
 	Room::Room(unsigned int num, RoomType type, char* description)
 	{
 		setNumber(num);

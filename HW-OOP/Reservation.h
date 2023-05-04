@@ -21,7 +21,8 @@ public:
 	Reservation();
 	Reservation(unsigned int id, Customer customer, Room room, Time start, Time end);
 	Reservation(const Reservation& other);
-
+	
+	const Room getRoom()const ;
 	const unsigned int getRoomNumber() const;
 	const unsigned int getID() const;
 	const Time getEndDate() const;

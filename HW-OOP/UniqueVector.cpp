@@ -13,6 +13,24 @@ void UniqueVector<T>::setCapacity(int val) {
 	this->_capacity = val;
 }
 
+template <typename T>
+void UniqueVector<T>::destroyObj(int ind) {
+	T* newArr = new T[this->getCapacity()];
+	int count = 0;
+	for (size_t i = 0; i < this->_length; i++)
+	{
+		if (i != ind)
+		{
+			newArr[count] = this->_arr[i];
+			count++;
+		}
+	}
+	delete[] _arr;
+	_arr = newArr;
+	_length--;
+}
+
+
 template<typename T>
 void UniqueVector<T>::deleteArr() {
 	delete[]this->_arr;
@@ -21,7 +39,10 @@ void UniqueVector<T>::deleteArr() {
 
 template<typename T>
 void UniqueVector<T>::copy(const UniqueVector<T>& other) {
-	deleteArr();
+	if (this->_length>0)
+	{
+		deleteArr();
+	}
 	for (size_t i = 0; i < other.getLength(); i++)
 	{
 		this->_arr[i] = other._arr[i]; //TODO
@@ -137,7 +158,7 @@ void UniqueVector<T>::addElement(const T& element) {
 	}
 	else
 	{
-		std::cout << "Element " << element << " already exists!\n";
+		std::cout << "Element " << element << "already exists!" << std::endl;
 	}
 
 }
@@ -177,20 +198,14 @@ void UniqueVector<T>::addElementAt(int position, const T& element) {
 }
 
 template<typename T>
-void UniqueVector<T>::removeElementAt(int postition) {
-	if (postition <= _length)
-	{
-		for (size_t i = postition - 1; i < this->_length - 2; i++)
-		{
-			this->_arr[i] = this->_arr[i + 1];
-		}
-		//delete this->_arr[_length];
-		this->_length--;
-		//this->_arr[_length] = nullptr;
+void UniqueVector<T>::removeElementAt(int position) {
+	if (position < _length)
+	{		
+		destroyObj(position);		
 	}
 	else
 	{
-		std::cout << "Element " << _arr[postition] << " already exists!" << std::endl;;
+		std::cout << "Element " << _arr[position] << " already exists!" << std::endl;;
 	}
 }
 
