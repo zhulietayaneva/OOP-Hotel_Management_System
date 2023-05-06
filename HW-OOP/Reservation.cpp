@@ -15,12 +15,12 @@
 	}
 	void Reservation::copy(const Reservation& other) {
 		if (this!=&other)
-		{					//get
-			this->_id = other._id;
-			this->_customer = other._customer;
-			this->_room = other._room;
-			this->_startDate = other._startDate;
-			this->_endDate = other._endDate;
+		{
+			this->_id = other.getID();
+			this->_customer = other.getCustomer();
+			this->_room = other.getRoom();
+			this->_startDate = other.getStartDate();
+			this->_endDate = other.getEndDate();
 
 		}
 	}
@@ -39,7 +39,7 @@
 	Reservation::Reservation(const Reservation& other) {
 		copy(other);
 	}
-	//TODO
+
 
 	const Room Reservation::getRoom() const { return this->_room; }
 	const unsigned int Reservation::getRoomNumber() const {
@@ -51,11 +51,17 @@
 	const Time Reservation::getEndDate() const {
 		return this->_endDate;
 	}
+	const Time Reservation::getStartDate() const {
+		return this->_startDate;
+	}
 	const unsigned int Reservation::getRoomPrice() const {
 		return this->_room.getPriceForANight();
 	}
 	const char* Reservation::getCustomerName() const {
 		return this->_customer.getName();
+	}
+	const Customer Reservation::getCustomer() const {
+		return this->_customer;
 	}
 
 	bool Reservation::operator==(const Reservation& other) {
@@ -76,7 +82,7 @@
 	}
 	bool Reservation::isTheRoomFreeForThePeriod(const Time& start, const Time& end) {
 		if (end < this->_startDate || this->_endDate < start)
-		{	//	TODO	
+		{		
 			return false;
 		}
 		return true;

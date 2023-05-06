@@ -18,7 +18,6 @@
 	{
 		this->_rooms = *(new UniqueVector<Room>());
 		this->_reservations = *(new UniqueVector<Reservation>());
-
 	}
 	Hotel::Hotel(int roomCapacity, int reservationCapacity)
 		: _rooms(roomCapacity), _reservations(reservationCapacity)
@@ -38,23 +37,18 @@
 	}
 	void Hotel::removeReservationWithNumber(unsigned int id) {
 
-
 		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
 			if (this->_reservations[i].getID() == id)
 			{
-
 				this->_reservations.removeElementAt(i);
 				std::cout << "Removed reservation with ID " << id << "!" << std::endl;
-
 			}
 		}
-
-
 	}
 	const unsigned int Hotel::profitFromReservationsEndingOn(const Time& end) const {
+		
 		unsigned int sum = 0;
-
 		for (size_t i = 0; i < this->_reservations.getLength(); i++)
 		{
 			if (this->_reservations[i].getEndDate() == end)
@@ -62,9 +56,7 @@
 				sum += this->_reservations[i].getRoomPrice();
 			}
 		}
-
 		return sum;
-
 	}
 	void Hotel::ReservatinsMadeByClient(const char* clientName) {
 		
@@ -75,8 +67,6 @@
 				std::cout << this->_reservations[i] << std::endl;;
 			}
 		}
-
-
 	}
 	
 	void Hotel::addRoom(const Room& room) {

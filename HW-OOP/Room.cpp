@@ -16,18 +16,16 @@
 		}
 	}
 	void Room::setDescription(char* val) {
-		if (this->_description!=nullptr)
-		{
-			delete[]this->_description;
-		}
 		this->_description = new char[strlen(val) + 1];
 		strcpy(this->_description, val);
 	}
 
 	void Room::destroy() {
-		delete[]this->_description;
-		this->_description = nullptr;
-
+		if (this->_description!=nullptr)
+		{
+			delete[]_description;
+			_description = nullptr;
+		}
 	}
 	void Room::copy(const Room& other) {
 		this->_number = other.getRoomNumber();
@@ -79,14 +77,14 @@
 	const unsigned int Room::getPriceForANight()const {
 		switch (this->_type)
 		{
-		case RoomType::Invalid: return 0;
-
-		case RoomType::Single: return 40;
-
-		case RoomType::Double: return 65;
-
-		case RoomType::Suite: return 90;
-
+		  case RoomType::Invalid: return 0;
+		  
+		  case RoomType::Single: return 40;
+		  
+		  case RoomType::Double: return 65;
+		  
+		  case RoomType::Suite: return 90;
+		  
 		}
 	}
 
@@ -95,7 +93,6 @@
 
 			copy(other);
 		}
-
 		return *this;
 	}
 	bool Room::operator==(const Room& other) {

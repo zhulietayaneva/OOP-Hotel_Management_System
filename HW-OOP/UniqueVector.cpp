@@ -30,7 +30,6 @@ void UniqueVector<T>::destroyObj(int ind) {
 	_length--;
 }
 
-
 template<typename T>
 void UniqueVector<T>::deleteArr() {
 	delete[]this->_arr;

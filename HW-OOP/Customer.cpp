@@ -15,8 +15,6 @@
 		{
 			throw new std::runtime_error("Invalid name!");
 		}
-
-
 	}
 	void Customer::setTelephoneNumber(const char* val) {
 		if (strlen(val) == 10 && strncmp(val, "08", 2) == 0)
@@ -28,8 +26,6 @@
 		{
 			throw new std::runtime_error("Invalid phone number");
 		}
-
-
 	}
 	void Customer::setAddress(const char* val) {
 		if (strlen(val) > 0)
@@ -41,8 +37,6 @@
 		{
 			throw new std::runtime_error("Invalid address");
 		}
-
-
 	}
 
 	void Customer::copy(const Customer& other) {
@@ -68,9 +62,6 @@
 	}
 
 
-
-
-
 	Customer::Customer()
 	{
 		this->_name = nullptr;
@@ -82,7 +73,6 @@
 		setName(name);
 		setTelephoneNumber(telNumber);
 		setAddress(address);
-
 	}
 	Customer::Customer(const Customer& other) {
 		copy(other);
@@ -100,7 +90,6 @@
 
 			copy(other);
 		}
-
 		return *this;
 	}
 	bool Customer::operator==(const Customer& other) {

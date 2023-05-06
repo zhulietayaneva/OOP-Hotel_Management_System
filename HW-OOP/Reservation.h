@@ -26,8 +26,10 @@ public:
 	const unsigned int getRoomNumber() const;
 	const unsigned int getID() const;
 	const Time getEndDate() const;
+	const Time getStartDate() const;
 	const unsigned int getRoomPrice() const;
 	const char* getCustomerName() const;
+	const Customer getCustomer() const;
 
 	bool operator==(const Reservation& other);
 	friend std::ostream& operator<<(std::ostream& os, const Reservation& obj);
